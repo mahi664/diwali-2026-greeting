@@ -25,6 +25,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Generate WhatsApp preview PNG
+        run: |
+          python -m pip install --quiet cairosvg
+          python - <<'PY'
+          import cairosvg
+          cairosvg.svg2png(url="assets/diwali-share.svg", write_to="assets/diwali-share.png", output_width=1200, output_height=630)
+          PY
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v4
         with:
