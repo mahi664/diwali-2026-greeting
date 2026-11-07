@@ -141,9 +141,6 @@ function lightDiya(button){
   button.setAttribute("aria-label","Diya "+button.dataset.diya+" is lit");
   const litCount=rangoliDiyas.filter(d=>d.classList.contains("lit")).length;
   rangoli.style.setProperty("--warmth",String(litCount/rangoliDiyas.length));
-  rangoliStatus.textContent=litCount===rangoliDiyas.length
-    ?"All six diyas are glowing. May your home be filled with light! ✨"
-    ? "": "": "";
   if(litCount===rangoliDiyas.length){
     rangoliStatus.textContent="All six diyas are glowing. May your home be filled with light! ✨";
     lightAllButton.textContent="✦ All diyas are lit";
