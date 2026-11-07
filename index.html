@@ -27,9 +27,12 @@
 .intro-kicker{color:#f4c979;letter-spacing:.38em;text-transform:uppercase;font-size:.68rem;margin-bottom:18px}
 .intro-title{font:500 clamp(2.5rem,9vw,5.5rem)/1 Georgia,serif;color:#ffe8b0;text-shadow:0 0 35px #ffb54a55;margin:0 0 14px}
 .intro-sub{color:#e7d7c6;letter-spacing:.08em;font-size:.95rem;margin:0 0 28px}
-.intro-diya{width:118px;height:100px;margin:0 auto 28px;position:relative;filter:drop-shadow(0 0 24px #ff9c3b55)}
-.intro-bowl{position:absolute;bottom:0;left:9px;width:100px;height:42px;border:1px solid #ffe0a0;border-radius:8px 8px 60px 60px;background:linear-gradient(#ffd98a,#b85a24 65%,#672b35);box-shadow:inset 0 5px 12px #fff5b255}
-.intro-flame{position:absolute;left:49px;bottom:36px;width:22px;height:49px;border-radius:80% 10% 70% 50%;transform-origin:50% 90%;background:radial-gradient(ellipse at 55% 70%,#fff 0 12%,#fff3a5 25%,#ffb22e 52%,#ff6a22 75%,transparent 77%);filter:drop-shadow(0 0 15px #ffb22e);animation:flicker .13s infinite alternate}
+.intro-diya{width:154px;height:116px;margin:0 auto 22px;position:relative;filter:drop-shadow(0 10px 22px #ff9c3b38)}
+.intro-diya-svg{display:block;width:100%;height:100%;overflow:visible}
+.intro-svg-flame{transform-box:fill-box;transform-origin:50% 100%;animation:diyaFlame 1.35s ease-in-out infinite alternate;filter:drop-shadow(0 0 9px #ffad36) drop-shadow(0 0 17px #ff8b28)}
+.intro-diya-glow{animation:diyaGlow 1.8s ease-in-out infinite alternate}
+@keyframes diyaFlame{from{transform:rotate(-3deg) scale(.97,.96)}to{transform:rotate(3deg) scale(1.03,1.04)}}
+@keyframes diyaGlow{from{opacity:.42}to{opacity:.78}}
 #enter{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:17px;min-width:min(310px,84vw);padding:8px 9px 8px 25px;border:1px solid #ffe6aeaa;border-radius:999px;overflow:hidden;background:linear-gradient(115deg,#fff0c9 0%,#ffd47d 38%,#e99a45 100%);color:#26172a;font-size:.94rem;font-weight:750;letter-spacing:.045em;box-shadow:0 0 0 5px #ffcf6b12,0 12px 38px #ffad4c38,0 0 55px #ffb64a25,inset 0 1px #fff9;transition:transform .25s ease,box-shadow .25s ease;animation:ctaBreathe 2.8s ease-in-out infinite}
 #enter:before{content:"";position:absolute;inset:0;z-index:-1;transform:translateX(-130%) skewX(-20deg);background:linear-gradient(100deg,transparent 25%,#fff9 48%,transparent 70%);animation:ctaShimmer 3.8s ease-in-out infinite}
 #enter:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 0 0 6px #ffcf6b1c,0 16px 44px #ffad4c55,0 0 70px #ffb64a38,inset 0 1px #fff}
@@ -144,7 +147,27 @@ body.intro-open{overflow:hidden}
 #beginFinale.ready{display:block;animation:finaleRise .6s both}
 @media(max-width:520px){#grandFinale{padding:66px 14px 18px}.finale-content{max-height:calc(100dvh - 88px);padding:30px 20px 24px;border-radius:24px}.finale-skip{top:12px;right:12px}.finale-title{font-size:clamp(2.7rem,12vw,4rem)}.finale-marathi{font-size:clamp(1.9rem,8vw,2.6rem)}.finale-actions{margin-top:22px}}
 @media(prefers-reduced-motion:reduce){#grandFinale,.finale-content{transition:none;animation:none}.finale-diya{animation:none}}
-</style></head><body><div id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle"><div class="intro-content"><div class="intro-kicker">A moment of light • 2026</div><div class="intro-diya" aria-hidden="true"><div class="intro-flame"></div><div class="intro-bowl"></div></div><h1 class="intro-title" id="introTitle">The Festival of a Thousand Lights</h1><p class="intro-sub">A celebration of hope, happiness and new beginnings.</p><button id="enter" type="button"><span>Step into the celebration</span><span class="enter-arrow" aria-hidden="true">↗</span></button><p class="intro-hint">Tap to begin your Diwali journey</p></div></div><audio id="diwaliAudio" src="assets/diwali-instrumental.mp3" preload="auto" playsinline loop></audio><canvas id="sky"></canvas><div id="lantern-layer" aria-hidden="true"></div><div class="petal-layer" id="petalLayer" aria-hidden="true"></div><main><nav><div class="brand">✦ Diwali 2026</div><div class="controls"><button id="sound" type="button" aria-pressed="false">♫ Music off</button><label class="volume-control" for="volume" aria-label="Music volume">Vol <input id="volume" type="range" min="0" max="100" value="35"></label></div></nav>
+</style></head><body><div id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle"><div class="intro-content"><div class="intro-kicker">A moment of light • 2026</div><div class="intro-diya" aria-hidden="true"><svg class="intro-diya-svg" viewBox="0 0 180 136" xmlns="http://www.w3.org/2000/svg">
+<defs>
+ <linearGradient id="diyaMetal" x1="0" y1="0" x2="0.15" y2="1"><stop stop-color="#fff0bd"/><stop offset=".18" stop-color="#eec16c"/><stop offset=".42" stop-color="#a95c2d"/><stop offset=".7" stop-color="#71352c"/><stop offset="1" stop-color="#d58a43"/></linearGradient>
+ <linearGradient id="diyaRim" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff4c8"/><stop offset=".38" stop-color="#f6d58a"/><stop offset="1" stop-color="#a85b32"/></linearGradient>
+ <linearGradient id="diyaFlameOuter" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ff7b24"/><stop offset=".48" stop-color="#ffb52f"/><stop offset="1" stop-color="#fff0a0"/></linearGradient>
+ <radialGradient id="diyaFlameCore"><stop stop-color="#fff"/><stop offset=".48" stop-color="#fff7cf"/><stop offset="1" stop-color="#ffd45c" stop-opacity=".08"/></radialGradient>
+ <filter id="diyaBlur"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+<ellipse class="intro-diya-glow" cx="90" cy="80" rx="58" ry="38" fill="#ff9d37" opacity=".5" filter="url(#diyaBlur)"/>
+<g class="intro-svg-flame">
+ <path d="M90 7 C68 31 70 48 78 65 C82 73 87 78 90 81 C100 68 111 54 106 37 C103 25 96 14 90 7Z" fill="url(#diyaFlameOuter)"/>
+ <path d="M90 34 C80 49 82 61 90 73 C98 60 100 48 90 34Z" fill="url(#diyaFlameCore)"/>
+</g>
+<path d="M24 78 Q25 104 48 117 Q90 133 132 117 Q155 104 156 78Z" fill="url(#diyaMetal)" stroke="#f6d58d" stroke-width="1.6"/>
+<path d="M24 78 Q90 91 156 78" fill="none" stroke="#fff0b5" stroke-width="2.2" opacity=".9"/>
+<ellipse cx="90" cy="78" rx="66" ry="10" fill="url(#diyaRim)" stroke="#fff0b5" stroke-width="1.6"/>
+<path d="M37 91 Q90 105 143 91" fill="none" stroke="#ffd98b" stroke-width="1.5" opacity=".8"/>
+<path d="M50 103 Q90 115 130 103" fill="none" stroke="#572a29" stroke-width="1.3" opacity=".65"/>
+<g fill="#ffe4a0" opacity=".9"><circle cx="43" cy="86" r="1.7"/><circle cx="56" cy="91" r="1.5"/><circle cx="70" cy="94" r="1.3"/><circle cx="110" cy="94" r="1.3"/><circle cx="124" cy="91" r="1.5"/><circle cx="137" cy="86" r="1.7"/></g>
+<path d="M70 119 Q90 125 110 119" fill="none" stroke="#f8d58b" stroke-width="1.2" opacity=".8"/>
+</svg></div><h1 class="intro-title" id="introTitle">The Festival of a Thousand Lights</h1><p class="intro-sub">A celebration of hope, happiness and new beginnings.</p><button id="enter" type="button"><span>Step into the celebration</span><span class="enter-arrow" aria-hidden="true">↗</span></button><p class="intro-hint">Tap to begin your Diwali journey</p></div></div><audio id="diwaliAudio" src="assets/diwali-instrumental.mp3" preload="auto" playsinline loop></audio><canvas id="sky"></canvas><div id="lantern-layer" aria-hidden="true"></div><div class="petal-layer" id="petalLayer" aria-hidden="true"></div><main><nav><div class="brand">✦ Diwali 2026</div><div class="controls"><button id="sound" type="button" aria-pressed="false">♫ Music off</button><label class="volume-control" for="volume" aria-label="Music volume">Vol <input id="volume" type="range" min="0" max="100" value="35"></label></div></nav>
 <section class="hero"><div class="eyebrow" id="eyebrow">THE FESTIVAL OF A THOUSAND LIGHTS</div><h1 id="headline">Wishing You a Glorious Diwali</h1></section>
 
 <section class="rangoli-wrap" aria-label="Traditional Diwali rangoli decorated with glowing diyas">
