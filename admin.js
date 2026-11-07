@@ -1,0 +1,13 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { firebaseConfig, firebaseConfigured } from "./firebase-config.js";
+const $ = id => document.getElementById(id);
+if (!firebaseConfigured) $("status").textContent = "Setup required: add your Firebase Web App config in firebase-config.js.";
+else {
+ const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+ $("loginForm").addEventListener("submit",async e=>{e.preventDefault();$("status").textContent="Signing in…";try{await signInWithEmailAndPassword(auth,$("email").value,$("password").value);$("status").textContent="";}catch(err){$("status").textContent="Sign-in failed. Check credentials and Firebase Auth settings."; }});
+ onAuthStateChanged(auth,user=>{ $("login").classList.toggle("hidden",!!user);$("dashboard").classList.toggle("hidden",!user);if(user)load();});
+ async function load(){ $("records").replaceChildren();$("updated").textContent="Loading…";try{const snap=await getDocs(query(collection(db,"personalisationEvents"),orderBy("createdAt","desc"),limit(1000)));const rows=snap.docs.map(d=>({id:d.id,...d.data()}));$("total").textContent=rows.length;$("individual").textContent=rows.filter(x=>x.senderType==="individual").length;$("groups").textContent=rows.filter(x=>["family","team"].includes(x.senderType)).length;for(const x of rows){const tr=document.createElement("tr");for(const value of [x.senderName||"—",x.senderType,x.shareMethod,x.createdAt?.toDate?.().toLocaleString?.()||"—"]){const td=document.createElement("td");td.textContent=value;tr.append(td);} $("records").append(tr);}window.trackerRows=rows;$("updated").textContent="Showing latest "+rows.length+" records. Refreshed "+new Date().toLocaleString();}catch(e){$("updated").textContent="Could not load records. Check Firestore rules and admin access.";}}
+ $("refresh").onclick=load;$("logout").onclick=()=>signOut(auth);$("export").onclick=()=>{const rows=window.trackerRows||[];const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';const csv=[["Sender","Type","Share method","Created at"],...rows.map(x=>[x.senderName,x.senderType,x.shareMethod,x.createdAt?.toDate?.().toISOString?.()])].map(r=>r.map(q).join(",")).join("\\r\\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="diwali-personalisations.csv";a.click();URL.revokeObjectURL(a.href);};
+}
