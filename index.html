@@ -73,6 +73,25 @@ body.intro-open{overflow:hidden}
 .rangoli-light-all:hover{background:linear-gradient(115deg,#fff0c4,#efaa5c);transform:translateY(-1px)}
 .rangoli-light-all:focus-visible{outline:2px solid #fff0b5;outline-offset:4px}
 @media(prefers-reduced-motion:reduce){.rangoli-halo,.rangoli-diya,.rangoli-diya:before,.rangoli-light-all{transition:none}.rangoli-diya.lit:before{animation:none}}
+
+/* Make every diya read as a lamp you can light */
+.rangoli-diya{width:39px;height:24px;border-radius:8px 8px 22px 22px;border:2px solid #f6d58d;background:linear-gradient(180deg,#ffe9ae 0%,#d88a42 32%,#8e3d36 100%);box-shadow:inset 0 4px 5px #fff4b477,0 5px 12px #0008,0 0 0 2px #ffd77a22;cursor:pointer}
+.rangoli-diya:after{content:"";position:absolute;left:5px;right:5px;top:3px;height:8px;border-radius:50%;background:radial-gradient(ellipse,#291621 0 35%,#6c3031 70%,#f5d08b 100%);box-shadow:inset 0 2px 3px #120b16}
+.rangoli-diya:before{content:"";position:absolute;width:9px;height:19px;left:13px;bottom:16px;border-radius:80% 10% 70% 50%;background:radial-gradient(ellipse at 50% 75%,#fff 0 10%,#fff0a5 28%,#ffad32 65%,transparent 73%);filter:drop-shadow(0 0 7px #ffba45);transform-origin:50% 90%;opacity:0;transition:opacity .35s ease,transform .35s ease}
+.rangoli-diya.unlit{filter:none;opacity:1;animation:unlitPulse 2.2s ease-in-out infinite}
+.rangoli-diya.unlit:before{opacity:.2;transform:scale(.45);filter:drop-shadow(0 0 3px #ffba45)}
+.rangoli-diya.lit{filter:brightness(1.15);box-shadow:inset 0 4px 5px #fff4b477,0 5px 12px #0008,0 0 18px #ffb94b,0 0 38px #ff9c3c88}
+.rangoli-diya.lit:before{opacity:1;transform:scale(1);animation:flicker .16s infinite alternate}
+.rangoli-diya.lit:after{background:radial-gradient(ellipse,#fff0ae 0 22%,#e58b36 62%,#6c3031 100%)}
+.rangoli-diya:hover{transform:translate(-50%,-50%) scale(1.16)}
+.rangoli-instruction{margin:8px 0 12px;color:#ffe2a4;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;text-shadow:0 0 14px #ffc45b66;animation:instructionGlow 2s ease-in-out infinite}
+.diya-wish{position:absolute;left:50%;top:48%;z-index:4;width:min(78%,330px);padding:13px 17px;transform:translate(-50%,-50%) scale(.88);opacity:0;pointer-events:none;border:1px solid #ffe1a0aa;border-radius:16px;background:linear-gradient(135deg,#21152deF,#4c2b3eef);box-shadow:0 10px 35px #0009,0 0 35px #ffb94b55;color:#fff0c5;font:italic 1rem/1.45 Georgia,serif;text-align:center;text-shadow:0 0 14px #ffd16b66}
+.diya-wish.show{animation:wishFlash 2.15s ease both}
+@keyframes wishFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.78)}14%{opacity:1;transform:translate(-50%,-50%) scale(1.04)}24%{transform:translate(-50%,-50%) scale(1)}78%{opacity:1}100%{opacity:0;transform:translate(-50%,-58%) scale(.98)}}
+@keyframes unlitPulse{50%{box-shadow:inset 0 4px 5px #fff4b477,0 5px 12px #0008,0 0 12px #ffbf5844}}
+@keyframes instructionGlow{50%{opacity:.68}}
+@media(max-width:520px){.rangoli-diya{width:35px;height:22px}.rangoli-diya:before{left:11px}.diya-wish{top:48%;font-size:.9rem;padding:11px 13px}}
+@media(prefers-reduced-motion:reduce){.rangoli-diya.unlit,.rangoli-instruction{animation:none}.diya-wish.show{animation:none;opacity:1}}
 </style></head><body><div id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle"><div class="intro-content"><div class="intro-kicker">A moment of light • 2026</div><div class="intro-diya" aria-hidden="true"><div class="intro-flame"></div><div class="intro-bowl"></div></div><h1 class="intro-title" id="introTitle">शुभ दीपावली</h1><p class="intro-sub">May your world glow with joy and wonder</p><button id="enter">Enter the celebration ✨</button></div></div><audio id="diwaliAudio" src="assets/diwali-instrumental.mp3" preload="auto" playsinline loop></audio><canvas id="sky"></canvas><div id="lantern-layer" aria-hidden="true"></div><main><nav><div class="brand">✦ Diwali 2026</div><div class="controls"><button id="lang">मराठी</button><button id="sound" type="button" aria-pressed="false">♫ Music off</button><label class="volume-control" for="volume" aria-label="Music volume">Vol <input id="volume" type="range" min="0" max="100" value="35"></label></div></nav>
 <section class="hero"><div class="eyebrow" id="eyebrow">A FESTIVAL OF LIGHT</div><h1 id="headline">Happy Diwali</h1><p class="sub" id="subline">May light find its way into every corner of your life.</p><div class="stage" id="diya" role="button" tabindex="0" aria-label="Light the diya"><div class="glow"></div><div class="diya"><div class="flame"></div><div class="wick"></div><div class="bowl"></div></div><div class="tap" id="tap">Tap the diya to celebrate ✨</div></div></section>
 
@@ -98,6 +117,8 @@ body.intro-open{overflow:hidden}
 <g fill="#fff0bd"><circle cx="410" cy="220" r="2.2"/><circle cx="406.3492032766138" cy="257.06716118306434" r="2.2"/><circle cx="395.5371111771445" cy="292.70985214936707" r="2.2"/><circle cx="377.9792263374836" cy="325.5583442737244" r="2.2"/><circle cx="354.35028842544403" cy="354.350288425444" r="2.2"/><circle cx="325.5583442737244" cy="377.9792263374836" r="2.2"/><circle cx="292.70985214936707" cy="395.5371111771445" r="2.2"/><circle cx="257.0671611830644" cy="406.3492032766138" r="2.2"/><circle cx="220" cy="410" r="2.2"/><circle cx="182.93283881693566" cy="406.3492032766138" r="2.2"/><circle cx="147.29014785063293" cy="395.5371111771445" r="2.2"/><circle cx="114.44165572627563" cy="377.9792263374836" r="2.2"/><circle cx="85.649711574556" cy="354.35028842544403" r="2.2"/><circle cx="62.020773662516376" cy="325.5583442737244" r="2.2"/><circle cx="44.46288882285552" cy="292.70985214936707" r="2.2"/><circle cx="33.65079672338621" cy="257.06716118306446" r="2.2"/><circle cx="30" cy="220.00000000000003" r="2.2"/><circle cx="33.65079672338621" cy="182.9328388169356" r="2.2"/><circle cx="44.46288882285549" cy="147.29014785063296" r="2.2"/><circle cx="62.020773662516376" cy="114.44165572627563" r="2.2"/><circle cx="85.64971157455594" cy="85.649711574556" r="2.2"/><circle cx="114.44165572627558" cy="62.020773662516405" r="2.2"/><circle cx="147.29014785063282" cy="44.462888822855575" r="2.2"/><circle cx="182.93283881693554" cy="33.650796723386236" r="2.2"/><circle cx="219.99999999999997" cy="30" r="2.2"/><circle cx="257.0671611830644" cy="33.65079672338621" r="2.2"/><circle cx="292.70985214936707" cy="44.46288882285555" r="2.2"/><circle cx="325.55834427372434" cy="62.020773662516376" r="2.2"/><circle cx="354.350288425444" cy="85.64971157455594" r="2.2"/><circle cx="377.9792263374836" cy="114.44165572627558" r="2.2"/><circle cx="395.5371111771444" cy="147.29014785063282" r="2.2"/><circle cx="406.34920327661376" cy="182.93283881693554" r="2.2"/></g>
 </svg>
 <p class="rangoli-caption">A circle of light, a celebration of togetherness</p>
+<p class="rangoli-instruction" id="rangoliInstruction">✦ Tap any diya below to light it ✦</p>
+<div class="diya-wish" id="diyaWish" role="status" aria-live="polite"></div>
 <p class="rangoli-status" id="rangoliStatus" aria-live="polite">Light the diyas one by one and bring the rangoli to life</p>
 <button class="rangoli-light-all" id="lightAllDiyas" type="button">✦ Light all diyas</button>
 </section>
@@ -134,6 +155,19 @@ const rangoli=document.querySelector(".rangoli-wrap");
 const rangoliDiyas=[...document.querySelectorAll(".rangoli-diya[data-diya]")];
 const rangoliStatus=document.getElementById("rangoliStatus");
 const lightAllButton=document.getElementById("lightAllDiyas");
+const diyaWish=document.getElementById("diyaWish");
+const diyaWishes={
+ en:["May your home shine with happiness.","May prosperity find its way to you.","May every new beginning glow with hope.","May peace and love fill your heart.","May laughter light up your home.","Wishing you a bright and beautiful Diwali!"],
+ mr:["तुमचे घर आनंदाच्या प्रकाशाने उजळो.","तुमच्या आयुष्यात सुख आणि समृद्धी नांदो.","प्रत्येक नवी सुरुवात आशेने उजळो.","तुमच्या मनात प्रेम आणि शांती नांदो.","तुमचे आयुष्य हास्याने फुलून जावो.","तुम्हाला आनंदमय दीपावलीच्या हार्दिक शुभेच्छा!"]
+};
+let wishTimer;
+function showDiyaWish(index){
+  diyaWish.classList.remove("show");void diyaWish.offsetWidth;
+  diyaWish.textContent=diyaWishes[lang][index];
+  diyaWish.classList.add("show");
+  clearTimeout(wishTimer);
+  wishTimer=setTimeout(()=>diyaWish.classList.remove("show"),2200);
+}
 function lightDiya(button){
   if(button.classList.contains("lit"))return;
   button.classList.remove("unlit");button.classList.add("lit");
@@ -141,10 +175,12 @@ function lightDiya(button){
   button.setAttribute("aria-label","Diya "+button.dataset.diya+" is lit");
   const litCount=rangoliDiyas.filter(d=>d.classList.contains("lit")).length;
   rangoli.style.setProperty("--warmth",String(litCount/rangoliDiyas.length));
+  showDiyaWish(Number(button.dataset.diya)-1);
   if(litCount===rangoliDiyas.length){
     rangoliStatus.textContent="All six diyas are glowing. May your home be filled with light! ✨";
     lightAllButton.textContent="✦ All diyas are lit";
-    celebrate();
+    document.getElementById("rangoliInstruction").textContent="✦ Your circle of light is complete ✦";
+    setTimeout(()=>celebrate(),450);
   }else{
     rangoliStatus.textContent=litCount+" of 6 diyas lit — keep the light spreading ✨";
   }
